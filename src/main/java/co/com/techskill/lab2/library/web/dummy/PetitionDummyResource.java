@@ -2,6 +2,7 @@ package co.com.techskill.lab2.library.web.dummy;
 
 import co.com.techskill.lab2.library.domain.dto.PetitionDTO;
 import co.com.techskill.lab2.library.service.dummy.PetitionService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -17,13 +18,18 @@ public class PetitionDummyResource {
     }
 
     @GetMapping("/all")
-    public Flux<PetitionDTO> getAllPetitions(){
+    public Flux<PetitionDTO> getAllPetitions() {
         return petitionService.dummyFindAll();
     }
 
     @PostMapping("/id")
-    public Mono<ResponseEntity<PetitionDTO>> findByPetitionId(@RequestBody PetitionDTO petitionDTO){
+    public Mono<ResponseEntity<PetitionDTO>> findByPetitionId(@RequestBody PetitionDTO petitionDTO) {
         return petitionService.dummyFindById(petitionDTO.getPetitionId())
                 .map(ResponseEntity::ok);
+    }
+
+    @PostMapping("/check")
+    public ResponseEntity<Flux<String>> findByPriority(@RequestBody PetitionDTO petitionDTO) {
+        return ResponseEntity.status(HttpStatus.OK).body(petitionService.generateLogByPriority(petitionDTO));
     }
 }

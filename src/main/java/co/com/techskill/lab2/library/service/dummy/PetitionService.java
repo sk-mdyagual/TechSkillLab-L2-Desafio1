@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 public class PetitionService {
     private final List<PetitionDTO> petitions = new ArrayList<>();
 
-    public PetitionService(){
+    public PetitionService() {
         petitions.add(new PetitionDTO("09c09cc8-b", "LEND", 5, "6600ab76-3", LocalDate.parse("2025-07-25")));
         petitions.add(new PetitionDTO("2f5fca21-b", "RETURN", 7, "12a13228-0", LocalDate.parse("2025-07-25")));
         petitions.add(new PetitionDTO("4c9ef769-9", "LEND", 7, "51ed516f-a", LocalDate.parse("2025-07-25")));
@@ -36,11 +37,11 @@ public class PetitionService {
         petitions.add(new PetitionDTO("742330cf-0", "LEND", 6, "12a13228-0", LocalDate.parse("2025-07-25")));
     }
 
-    public Flux<PetitionDTO> dummyFindAll(){
+    public Flux<PetitionDTO> dummyFindAll() {
         return Flux.fromIterable(petitions);
     }
 
-    public Mono<PetitionDTO> dummyFindById(String id){
+    public Mono<PetitionDTO> dummyFindById(String id) {
         return Mono.justOrEmpty(
                 petitions.stream()
                         .filter(petitionDTO -> petitionDTO.getPetitionId().equals(id))
@@ -48,5 +49,20 @@ public class PetitionService {
         );
     }
 
+    public Flux<PetitionDTO> checkPriority(Integer id) {
+        return Flux.fromIterable(petitions).filter(petition -> petition.getPriority()>=id);
+    }
+
     //TO - DO: Challenge #1
+    public Flux<String> generateLogByPriority(PetitionDTO petitionDTO) {
+        return checkPriority(petitionDTO.getPriority())
+                .limitRate(3)
+                .map(
+                        petitionDTO1 ->
+                                "petitionId:\t" + petitionDTO1.getPetitionId() + " " +
+                                "type:\t" + petitionDTO1.getType() + " " +
+                                "priority:\t" + petitionDTO1.getPriority())
+                .doOnNext(System.out::println)
+                .delayElements(Duration.ofMillis(1000));
+    }
 }
