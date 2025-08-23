@@ -34,6 +34,26 @@ public class PetitionService {
         petitions.add(new PetitionDTO("0ff09c9e-5", "LEND", 6, "11b553eb-b", LocalDate.parse("2025-07-25")));
         petitions.add(new PetitionDTO("86084e60-e", "RETURN", 7, "11b553eb-b", LocalDate.parse("2025-07-25")));
         petitions.add(new PetitionDTO("742330cf-0", "LEND", 6, "12a13228-0", LocalDate.parse("2025-07-25")));
+        petitions.add(new PetitionDTO("z-1", "LEND", 8, "6600ab76-3", LocalDate.parse("2025-07-25")));
+        petitions.add(new PetitionDTO("z-2", "RETURN", 9, "12a13228-0", LocalDate.parse("2025-07-25")));
+        petitions.add(new PetitionDTO("z-3", "LEND", 10, "51ed516f-a", LocalDate.parse("2025-07-25")));
+        petitions.add(new PetitionDTO("z-4", "RETURN", 8, "11b553eb-b", LocalDate.parse("2025-07-25")));
+        petitions.add(new PetitionDTO("z-5", "LEND", 9, "297c17d8-4", LocalDate.parse("2025-07-25")));
+        petitions.add(new PetitionDTO("z-6", "RETURN", 10, "3c24c2fa-3", LocalDate.parse("2025-07-25")));
+        petitions.add(new PetitionDTO("z-7", "LEND", 8, "eb25c2d4-7", LocalDate.parse("2025-07-25")));
+        petitions.add(new PetitionDTO("z-8", "RETURN", 9, "1940136a-2", LocalDate.parse("2025-07-25")));
+        petitions.add(new PetitionDTO("z-9", "LEND", 10, "6600ab76-3", LocalDate.parse("2025-07-25")));
+        petitions.add(new PetitionDTO("z-10", "RETURN", 8, "12a13228-0", LocalDate.parse("2025-07-25")));
+        petitions.add(new PetitionDTO("z-11", "LEND", 9, "51ed516f-a", LocalDate.parse("2025-07-25")));
+        petitions.add(new PetitionDTO("z-12", "RETURN", 10, "11b553eb-b", LocalDate.parse("2025-07-25")));
+        petitions.add(new PetitionDTO("z-13", "LEND", 8, "297c17d8-4", LocalDate.parse("2025-07-25")));
+        petitions.add(new PetitionDTO("z-14", "RETURN", 9, "3c24c2fa-3", LocalDate.parse("2025-07-25")));
+        petitions.add(new PetitionDTO("z-15", "LEND", 10, "eb25c2d4-7", LocalDate.parse("2025-07-25")));
+        petitions.add(new PetitionDTO("z-16", "RETURN", 8, "1940136a-2", LocalDate.parse("2025-07-25")));
+        petitions.add(new PetitionDTO("z-17", "LEND", 9, "6600ab76-3", LocalDate.parse("2025-07-25")));
+        petitions.add(new PetitionDTO("z-18", "RETURN", 10, "12a13228-0", LocalDate.parse("2025-07-25")));
+        petitions.add(new PetitionDTO("z-19", "LEND", 8, "51ed516f-a", LocalDate.parse("2025-07-25")));
+        petitions.add(new PetitionDTO("z-20", "RETURN", 9, "11b553eb-b", LocalDate.parse("2025-07-25")));
     }
 
     public Flux<PetitionDTO> dummyFindAll(){
