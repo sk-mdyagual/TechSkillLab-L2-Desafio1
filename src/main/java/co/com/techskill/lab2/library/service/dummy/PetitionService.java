@@ -1,10 +1,12 @@
 package co.com.techskill.lab2.library.service.dummy;
 
 import co.com.techskill.lab2.library.domain.dto.PetitionDTO;
+import org.springframework.data.mongodb.core.aggregation.ArithmeticOperators;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,4 +51,12 @@ public class PetitionService {
     }
 
     //TO - DO: Challenge #1
+    public Flux<String> findByPriority(Integer p) {
+        return this.dummyFindAll()
+                .filter(petition -> petition.getPriority() >= p)
+                .flatMap(petition -> Mono.justOrEmpty("Petition ID: " + petition.getPetitionId()+
+                        " Petition Priority: " + petition.getPriority()))
+                .limitRate(1).delayElements(Duration.ofMillis(500))
+                ;
+    }
 }
