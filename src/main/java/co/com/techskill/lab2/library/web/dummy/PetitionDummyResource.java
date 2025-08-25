@@ -26,4 +26,9 @@ public class PetitionDummyResource {
         return petitionService.dummyFindById(petitionDTO.getPetitionId())
                 .map(ResponseEntity::ok);
     }
+
+    @PostMapping("/priority")
+    public Flux<String> dummyFindPetitionByPriority(@RequestBody PetitionDTO petitionDTO){
+        return petitionService.dummyFindPetitionByPriority(petitionDTO.getPriority());
+    }
 }
