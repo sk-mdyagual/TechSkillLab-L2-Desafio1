@@ -26,4 +26,9 @@ public class PetitionDummyResource {
         return petitionService.dummyFindById(petitionDTO.getPetitionId())
                 .map(ResponseEntity::ok);
     }
+
+    @GetMapping("/GreaterThanSeven")
+    public Flux<String> getGreaterThanSeven(){
+        return petitionService.checkPrioritiesGreaterThanSeven();
+    }
 }

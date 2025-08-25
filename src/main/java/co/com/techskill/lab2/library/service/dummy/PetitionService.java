@@ -1,19 +1,25 @@
 package co.com.techskill.lab2.library.service.dummy;
 
+import co.com.techskill.lab2.library.config.PetitionMapper;
+import co.com.techskill.lab2.library.config.PetitionMapperImpl;
 import co.com.techskill.lab2.library.domain.dto.PetitionDTO;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class PetitionService {
     private final List<PetitionDTO> petitions = new ArrayList<>();
+    private final PetitionMapper petitionMapper;
 
     public PetitionService(){
+        petitionMapper = new PetitionMapperImpl();
         petitions.add(new PetitionDTO("09c09cc8-b", "LEND", 5, "6600ab76-3", LocalDate.parse("2025-07-25")));
         petitions.add(new PetitionDTO("2f5fca21-b", "RETURN", 7, "12a13228-0", LocalDate.parse("2025-07-25")));
         petitions.add(new PetitionDTO("4c9ef769-9", "LEND", 7, "51ed516f-a", LocalDate.parse("2025-07-25")));
@@ -49,4 +55,20 @@ public class PetitionService {
     }
 
     //TO - DO: Challenge #1
+    public Flux<PetitionDTO> findByPriorityGreaterThanSeven() {
+        return dummyFindAll()
+                .filter(petition -> petition.getPriority() >= 7);
+    }
+
+    public Flux<String> checkPrioritiesGreaterThanSeven() {
+        return findByPriorityGreaterThanSeven()
+                .map(petitionDTO -> LocalTime.now() +
+                        " - Check priority with level greater or equals than 7 "
+                        + ", Petition dummy ID: " + petitionDTO.getPetitionId()
+                        +",  For Book dummy  ID:  " + petitionDTO.getBookId()+"\n")
+
+                .limitRate(1)
+                .delayElements(Duration.ofMillis(1000))
+                .doOnNext(System.out::println);
+    }
 }
