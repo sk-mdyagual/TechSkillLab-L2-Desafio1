@@ -49,4 +49,20 @@ public class PetitionService {
     }
 
     //TO - DO: Challenge #1
+
+    public void reto1 () {
+        Flux<String> condiciones = dummyFindAll()
+                .filter(p -> p.getPriority() >= 7)
+                .limitRate(1)
+                .map(p -> "Petición con ID " + p.getPetitionId() + " y prioridad " + p.getPriority() + " identificacion del libro " +
+                        p.getBookId() + " en la fecha " + p.getSentAt() + "\n") ;
+
+        condiciones.doOnNext(System.out::println).subscribe();
+
+
+
+
+
+    }
+
 }
