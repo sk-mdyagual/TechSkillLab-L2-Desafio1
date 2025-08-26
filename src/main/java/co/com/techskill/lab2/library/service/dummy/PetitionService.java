@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,4 +50,33 @@ public class PetitionService {
     }
 
     //TO - DO: Challenge #1
+
+    public Flux<PetitionDTO> petitionsFilter(Integer minPriority) {
+        System.out.println(minPriority);
+        Flux<PetitionDTO> elements = dummyFindAll()
+                .filter(petition -> petition.getPriority() >= minPriority);
+        petitionsPrint(elements);
+        return  elements;
+    }
+
+    public void petitionsPrint(Flux<PetitionDTO> c){
+
+        System.out.println("Entro a petitionsPrint");
+        c.limitRate(1)  // Pedir un elemento a la vez
+                .concatMap(petition -> Mono.just(petition)
+                        .delayElement(Duration.ofMillis(5000))  // Delay de 5 segundos antes de emitir cada elemento
+                        .map(p -> " --- Peticion: " +
+                                "petitionID: "+ p.getPetitionId()+
+                                " petitionType: " + p.getType() +
+                                " petitionPriority: " + p.getPriority() +
+                                " petitionBookId: " + p.getBookId() +
+                                " petitionSentAt: " + p.getSentAt() +
+                                " ------------------"
+                        )
+                )
+                .doOnNext(System.out::println)
+                .subscribe();
+    }
+
+
 }

@@ -18,6 +18,7 @@ public class PetitionResource {
 
     @GetMapping("/all")
     public Flux<PetitionDTO> getAllPetitions(){
+        System.out.println("Entro al EndPoint /petitions/all");
         return petitionService.findALl();
     }
 

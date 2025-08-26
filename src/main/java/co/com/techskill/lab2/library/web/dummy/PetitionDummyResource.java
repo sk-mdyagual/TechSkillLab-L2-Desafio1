@@ -21,6 +21,12 @@ public class PetitionDummyResource {
         return petitionService.dummyFindAll();
     }
 
+    @GetMapping("/petitionsSimulator")
+    public Flux<PetitionDTO> getAllPetitionsSimulator(){
+        System.out.println("Entro al EndPoint /dummy/petitions/petitionsSimulator");
+        return petitionService.petitionsFilter(7);
+    }
+
     @PostMapping("/id")
     public Mono<ResponseEntity<PetitionDTO>> findByPetitionId(@RequestBody PetitionDTO petitionDTO){
         return petitionService.dummyFindById(petitionDTO.getPetitionId())

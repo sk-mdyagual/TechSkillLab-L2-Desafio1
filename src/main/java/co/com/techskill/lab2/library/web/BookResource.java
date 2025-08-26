@@ -18,7 +18,9 @@ public class BookResource {
 
     @GetMapping("/all")
     public Flux<BookDTO> getAllBooks(){
+        System.out.println("Entro al EndPoint /books/all");
         return bookService.findAll();
+
     }
 
     @PostMapping("/id")
