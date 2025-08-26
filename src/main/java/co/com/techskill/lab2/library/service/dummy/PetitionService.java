@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,4 +50,24 @@ public class PetitionService {
     }
 
     //TO - DO: Challenge #1
+    public Flux<String> dummyFindPetitionByPriority(Integer priority){
+        final int prefetch = 5;
+        final int concurrency = 4;
+        final Duration ritmo = Duration.ofMillis(500);
+
+        return Flux.fromIterable(petitions)
+                .filter(p -> p.getPriority() >= priority)
+                .map(p -> "Id de la peticion: " + p.getPetitionId()
+                        + ", Tipo de la peticion: " + p.getType()
+                        + ", Prioridad de la peticion: " + p.getPriority()
+                        + ", Id del libro: " + p.getBookId()
+                        + ", Fecha de la peticion: " + p.getSentAt() + ". ")
+                .limitRate(prefetch)
+                .flatMap(msg -> Mono.just(msg)
+                        .delayElement(Duration.ofMillis(
+                                java.util.concurrent.ThreadLocalRandom.current().nextInt(80, 250)
+                        )), concurrency, prefetch)    // simulación de IO asíncrono
+                .concatMap(msg -> Mono.just(msg).delayElement(ritmo)) // ritmo constante y orden
+                .doOnNext(System.out::println);
+    }
 }

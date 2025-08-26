@@ -5,6 +5,7 @@ import co.com.techskill.lab2.library.config.PetitionMapperImpl;
 import co.com.techskill.lab2.library.domain.dto.PetitionDTO;
 import co.com.techskill.lab2.library.repository.IPetitionRepository;
 import co.com.techskill.lab2.library.service.IPetitionService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -15,6 +16,7 @@ import java.time.LocalTime;
 import java.util.UUID;
 
 @Service
+@Profile("mongo")
 public class PetitionServiceImpl implements IPetitionService {
 
     private final IPetitionRepository petitionRepository;
