@@ -26,4 +26,11 @@ public class PetitionDummyResource {
         return petitionService.dummyFindById(petitionDTO.getPetitionId())
                 .map(ResponseEntity::ok);
     }
+
+    @GetMapping("/check/flow")
+    public Mono<ResponseEntity<String>> checkFlow(){
+        petitionService.generateFlowPetitions().subscribe();
+        return Mono.just(ResponseEntity.accepted().body("Flujo Iniciado, ver consola del servidor"));
+
+    }
 }
