@@ -1,8 +1,8 @@
 package co.com.techskill.lab2.library.domain.entity;
 
-import org.springframework.data.mongodb.core.mapping.Document;
+//import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "books")
+//@Document(collection = "books")
 public class Book {
 
     private String bookId;

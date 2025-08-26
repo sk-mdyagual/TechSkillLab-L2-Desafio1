@@ -1,11 +1,11 @@
 package co.com.techskill.lab2.library.domain.entity;
 
-import org.springframework.data.mongodb.core.mapping.Document;
+//import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 
 
-@Document(collection = "petitions")
+//@Document(collection = "petitions")
 public class Petition {
     private String petitionId;
     private String type; //LEND - RETURN

@@ -39,5 +39,11 @@ public class PetitionResource {
         return petitionService.checkPriorities(petitionDTO.getPriority());
     }
 
+    @GetMapping("/priority/{level}")
+    public Flux<String> findByPriority(@PathVariable Integer level){
+        return petitionService.checkPriorities(level);
+
+    }
+
 
 }

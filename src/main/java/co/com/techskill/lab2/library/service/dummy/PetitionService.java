@@ -1,6 +1,7 @@
 package co.com.techskill.lab2.library.service.dummy;
 
 import co.com.techskill.lab2.library.domain.dto.PetitionDTO;
+import co.com.techskill.lab2.library.domain.entity.Petition;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -8,6 +9,7 @@ import reactor.core.publisher.Mono;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 @Service
 public class PetitionService {
@@ -48,5 +50,11 @@ public class PetitionService {
         );
     }
 
+    public Mono<PetitionDTO> dummySave(PetitionDTO petitionDTO){
+        petitions.add(petitionDTO);
+        return Mono.justOrEmpty(petitionDTO);
+    }
+
     //TO - DO: Challenge #1
+
 }
