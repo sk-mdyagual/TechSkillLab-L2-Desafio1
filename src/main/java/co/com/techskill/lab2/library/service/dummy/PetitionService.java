@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,5 +50,15 @@ public class PetitionService {
         );
     }
 
-    //TO - DO: Challenge #1
+    //Challenge #1
+
+    public Flux<String> dummyFilterPriority() {
+        return dummyFindAll()
+                .filter(petition -> petition.getPriority() >= 7)
+                .map(petition -> " Prioridad " + petition.getPriority() +
+                        ": Petition ID " + petition.getPetitionId() +
+                        " | Book ID " + petition.getBookId())
+                .delayElements(Duration.ofSeconds(2)) // 2 segundos entre mensajes
+                .doOnNext(s -> System.out.println("Enviando notificación en : " + LocalTime.now() + s));
+    }
 }
