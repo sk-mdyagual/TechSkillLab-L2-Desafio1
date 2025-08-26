@@ -4,6 +4,9 @@ import co.com.techskill.lab2.library.domain.dto.PetitionDTO;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import java.time.Duration;
+import java.time.LocalTime;
+
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -49,4 +52,19 @@ public class PetitionService {
     }
 
     //TO - DO: Challenge #1
+    public Flux<String> dummyFindByPrioritySeven() {
+        return Flux.fromIterable(petitions)
+                .filter(p -> p.getPriority() >= 7)
+                .map(p ->
+                        LocalTime.now() +
+                                " | Prioridad " + p.getPriority() +
+                                ", Petition ID: " + p.getPetitionId() +
+                                ", Book ID: " + p.getBookId()
+                )
+                .limitRate(5)
+                .flatMap(msg ->
+                        Mono.just(msg).delayElement(Duration.ofMillis(500))
+                )
+                .doOnNext(System.out::println);
+    }
 }

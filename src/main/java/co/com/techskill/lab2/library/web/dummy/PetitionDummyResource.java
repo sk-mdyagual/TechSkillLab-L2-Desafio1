@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import java.time.Duration;
+
 
 @RestController
 @RequestMapping("/dummy/petitions")
@@ -26,4 +28,12 @@ public class PetitionDummyResource {
         return petitionService.dummyFindById(petitionDTO.getPetitionId())
                 .map(ResponseEntity::ok);
     }
+    @GetMapping("/process")
+    public Flux<String> processPetitions() {
+        return petitionService.dummyFindByPrioritySeven();
+    }
+
+
 }
+
+
