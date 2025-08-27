@@ -49,4 +49,37 @@ public class PetitionService {
     }
 
     //TO - DO: Challenge #1
+    
+    /**
+     * Genera un flujo de 20 solicitudes, filtra aquellas con prioridad >= 7
+     * y las convierte en mensajes con control de ritmo constante.
+     * 
+     * @return Flux<String> con los mensajes de las solicitudes filtradas
+     */
+    public Flux<String> generateHighPriorityPetitionFlow() {
+        return Flux.fromIterable(petitions)
+                .filter(petition -> petition.getPriority() >= 7)
+                .map(petition -> "Solicitud ID: " + petition.getPetitionId() + 
+                      ", Tipo: " + petition.getType() + 
+                      ", Prioridad: " + petition.getPriority() + 
+                      ", Libro ID: " + petition.getBookId())
+                .limitRate(2) // Control de velocidad del flujo
+                .delayElements(java.time.Duration.ofMillis(500)); // Ritmo constante
+    }
+    
+    /**
+     * Versión asíncrona que simula una llamada remota
+     * utilizando Mono y flatMap
+     */
+    public Flux<String> generateHighPriorityPetitionFlowAsync() {
+        return Flux.fromIterable(petitions)
+                .filter(petition -> petition.getPriority() >= 7)
+                .flatMap(petition -> Mono.just(petition)
+                        .map(p -> "[Async] Solicitud ID: " + p.getPetitionId() + 
+                              ", Tipo: " + p.getType() + 
+                              ", Prioridad: " + p.getPriority() + 
+                              ", Libro ID: " + p.getBookId()))
+                .limitRate(2)
+                .delayElements(java.time.Duration.ofMillis(500));
+    }
 }

@@ -26,4 +26,23 @@ public class PetitionDummyResource {
         return petitionService.dummyFindById(petitionDTO.getPetitionId())
                 .map(ResponseEntity::ok);
     }
+    
+    /**
+     * Challenge #1: Endpoint que retorna un flujo de solicitudes de alta prioridad
+     * con control de ritmo y transformación de mensajes
+     */
+    @GetMapping("/high-priority-flow")
+    public Flux<String> getHighPriorityPetitionFlow() {
+        return petitionService.generateHighPriorityPetitionFlow()
+                .doOnNext(message -> System.out.println("[Console Output]: " + message));
+    }
+    
+    /**
+     * Challenge #1: Endpoint alternativo con procesamiento asíncrono
+     */
+    @GetMapping("/high-priority-flow-async")
+    public Flux<String> getHighPriorityPetitionFlowAsync() {
+        return petitionService.generateHighPriorityPetitionFlowAsync()
+                .doOnNext(message -> System.out.println("[Console Output]: " + message));
+    }
 }
