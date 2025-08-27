@@ -17,13 +17,18 @@ public class PetitionDummyResource {
     }
 
     @GetMapping("/all")
-    public Flux<PetitionDTO> getAllPetitions(){
+    public Flux<PetitionDTO> getAllPetitions() {
         return petitionService.dummyFindAll();
     }
 
     @PostMapping("/id")
-    public Mono<ResponseEntity<PetitionDTO>> findByPetitionId(@RequestBody PetitionDTO petitionDTO){
+    public Mono<ResponseEntity<PetitionDTO>> findByPetitionId(@RequestBody PetitionDTO petitionDTO) {
         return petitionService.dummyFindById(petitionDTO.getPetitionId())
                 .map(ResponseEntity::ok);
+    }
+
+    @GetMapping("/checkPriorities")
+    public Flux<String> checkPriorities() {
+        return petitionService.checkPriorities();
     }
 }

@@ -1,11 +1,14 @@
 package co.com.techskill.lab2.library.service.dummy;
 
 import co.com.techskill.lab2.library.domain.dto.PetitionDTO;
+import co.com.techskill.lab2.library.domain.entity.Petition;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,4 +52,22 @@ public class PetitionService {
     }
 
     //TO - DO: Challenge #1
+    public Flux<String> checkPriorities() {
+        return dummyFindAll()
+                .limitRate(20)
+                .filter(petition -> petition.getPriority() >= 7)
+                .delayElements(Duration.ofMillis(200))
+                .flatMap(this::prioritiesProcessing)
+                .doOnNext(System.out::println);
+    }
+
+    private Mono<String> prioritiesProcessing(PetitionDTO petition) {
+        return Mono.just(
+                "The petition with ID: " + petition.getPetitionId()
+                        + " Type: " + petition.getType()
+                        + " has priority: " + petition.getPriority()
+                        + " and was processed at: " + LocalTime.now()
+        ).delayElement(Duration.ofMillis(100));
+    }
+
 }
